@@ -36,6 +36,14 @@ This is golang clean architecture template.
 - Logrus (Logger) : <https://github.com/sirupsen/logrus>
 - Confluent Kafka Golang : <https://github.com/confluentinc/confluent-kafka-go>
 
+## Development Tools
+
+- Air (Live Reload) : <https://github.com/air-verse/air>
+- GoCritic : <https://github.com/go-critic/go-critic>
+- GolangCI-Lint : <https://github.com/golangci/golangci-lint>
+- GoSec : <https://github.com/securego/gosec>
+- Migrate : <https://github.com/golang-migrate/migrate>
+
 ## Configuration
 
 All configuration is in `example-config.json` file. You can copy this file to `config.json` and modify it.
@@ -61,7 +69,7 @@ migrate create -ext sql -dir db/migrations create_table_xxx
 ### Run Migration
 
 ```shell
-migrate -database "postgres://postgres:@localhost/golang_clean_architecture?sslmode=disable" -path db/migrations up
+DATABASE_URL="postgres://postgres:5432@localhost/golang_clean_architecture?sslmode=disable" make migrate.up
 ```
 
 ## Run Application
@@ -69,17 +77,17 @@ migrate -database "postgres://postgres:@localhost/golang_clean_architecture?sslm
 ### Run unit test
 
 ```bash
-go test -v ./test/
+make test
 ```
 
 ### Run web server
 
 ```bash
-go run cmd/web/main.go
+make run.web
 ```
 
 ### Run worker
 
 ```bash
-go run cmd/worker/main.go
+make run.worker
 ```
