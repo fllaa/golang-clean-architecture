@@ -2,15 +2,16 @@ package test
 
 import (
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"golang-clean-architecture/internal/entity"
 	"golang-clean-architecture/internal/model"
-	"golang.org/x/crypto/bcrypt"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func TestRegister(t *testing.T) {
@@ -207,7 +208,7 @@ func TestLogout(t *testing.T) {
 	err := db.Where("id = ?", "khannedy").First(user).Error
 	assert.Nil(t, err)
 
-	request := httptest.NewRequest(http.MethodDelete, "/api/users", nil)
+	request := httptest.NewRequest(http.MethodDelete, "/api/users", http.NoBody)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
@@ -230,7 +231,7 @@ func TestLogoutWrongAuthorization(t *testing.T) {
 	ClearAll()
 	TestLogin(t) // login success
 
-	request := httptest.NewRequest(http.MethodDelete, "/api/users", nil)
+	request := httptest.NewRequest(http.MethodDelete, "/api/users", http.NoBody)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", "wrong")
@@ -257,7 +258,7 @@ func TestGetCurrentUser(t *testing.T) {
 	err := db.Where("id = ?", "khannedy").First(user).Error
 	assert.Nil(t, err)
 
-	request := httptest.NewRequest(http.MethodGet, "/api/users/_current", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/users/_current", http.NoBody)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
@@ -283,7 +284,7 @@ func TestGetCurrentUserFailed(t *testing.T) {
 	ClearAll()
 	TestLogin(t) // login success
 
-	request := httptest.NewRequest(http.MethodGet, "/api/users/_current", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/users/_current", http.NoBody)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", "wrong")

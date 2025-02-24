@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"github.com/sirupsen/logrus"
 	"golang-clean-architecture/internal/entity"
+
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -17,7 +18,7 @@ func NewAddressRepository(log *logrus.Logger) *AddressRepository {
 	}
 }
 
-func (r *AddressRepository) FindByIdAndContactId(tx *gorm.DB, address *entity.Address, id string, contactId string) error {
+func (r *AddressRepository) FindByIdAndContactId(tx *gorm.DB, address *entity.Address, id, contactId string) error {
 	return tx.Where("id = ? AND contact_id = ?", id, contactId).First(address).Error
 }
 

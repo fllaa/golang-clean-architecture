@@ -2,15 +2,16 @@ package usecase
 
 import (
 	"context"
-	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 	"golang-clean-architecture/internal/entity"
 	"golang-clean-architecture/internal/gateway/messaging"
 	"golang-clean-architecture/internal/model"
 	"golang-clean-architecture/internal/model/converter"
 	"golang-clean-architecture/internal/repository"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -201,8 +202,8 @@ func (c *AddressUseCase) List(ctx context.Context, request *model.ListAddressReq
 	}
 
 	responses := make([]model.AddressResponse, len(addresses))
-	for i, address := range addresses {
-		responses[i] = *converter.AddressToResponse(&address)
+	for i := range addresses {
+		responses[i] = *converter.AddressToResponse(&addresses[i])
 	}
 
 	return responses, nil

@@ -2,8 +2,6 @@ package test
 
 import (
 	"encoding/json"
-	"github.com/google/uuid"
-	"github.com/stretchr/testify/assert"
 	"golang-clean-architecture/internal/entity"
 	"golang-clean-architecture/internal/model"
 	"io"
@@ -11,6 +9,9 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/google/uuid"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateContact(t *testing.T) {
@@ -100,7 +101,7 @@ func TestGetConnect(t *testing.T) {
 	err = db.Where("user_id = ?", user.ID).First(contact).Error
 	assert.Nil(t, err)
 
-	request := httptest.NewRequest(http.MethodGet, "/api/contacts/"+contact.ID, nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/contacts/"+contact.ID, http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 
@@ -131,7 +132,7 @@ func TestGetContactFailed(t *testing.T) {
 	err := db.Where("id = ?", "khannedy").First(user).Error
 	assert.Nil(t, err)
 
-	request := httptest.NewRequest(http.MethodGet, "/api/contacts/"+uuid.NewString(), nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/contacts/"+uuid.NewString(), http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 
@@ -276,7 +277,7 @@ func TestDeleteContact(t *testing.T) {
 	err = db.Where("user_id = ?", user.ID).First(contact).Error
 	assert.Nil(t, err)
 
-	request := httptest.NewRequest(http.MethodDelete, "/api/contacts/"+contact.ID, nil)
+	request := httptest.NewRequest(http.MethodDelete, "/api/contacts/"+contact.ID, http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 
@@ -301,7 +302,7 @@ func TestDeleteContactFailed(t *testing.T) {
 	err := db.Where("id = ?", "khannedy").First(user).Error
 	assert.Nil(t, err)
 
-	request := httptest.NewRequest(http.MethodDelete, "/api/contacts/"+uuid.NewString(), nil)
+	request := httptest.NewRequest(http.MethodDelete, "/api/contacts/"+uuid.NewString(), http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 
@@ -327,7 +328,7 @@ func TestSearchContact(t *testing.T) {
 
 	CreateContacts(user, 20)
 
-	request := httptest.NewRequest(http.MethodGet, "/api/contacts", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/contacts", http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 
@@ -358,7 +359,7 @@ func TestSearchContactWithPagination(t *testing.T) {
 
 	CreateContacts(user, 20)
 
-	request := httptest.NewRequest(http.MethodGet, "/api/contacts?page=2&size=5", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/contacts?page=2&size=5", http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 
@@ -389,7 +390,7 @@ func TestSearchContactWithFilter(t *testing.T) {
 
 	CreateContacts(user, 20)
 
-	request := httptest.NewRequest(http.MethodGet, "/api/contacts?name=contact&phone=08000000&email=example.com", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/contacts?name=contact&phone=08000000&email=example.com", http.NoBody)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Authorization", user.Token)
 

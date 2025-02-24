@@ -2,15 +2,16 @@ package usecase
 
 import (
 	"context"
-	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 	"golang-clean-architecture/internal/entity"
 	"golang-clean-architecture/internal/gateway/messaging"
 	"golang-clean-architecture/internal/model"
 	"golang-clean-architecture/internal/model/converter"
 	"golang-clean-architecture/internal/repository"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -181,8 +182,8 @@ func (c *ContactUseCase) Search(ctx context.Context, request *model.SearchContac
 	}
 
 	responses := make([]model.ContactResponse, len(contacts))
-	for i, contact := range contacts {
-		responses[i] = *converter.ContactToResponse(&contact)
+	for i := range contacts {
+		responses[i] = *converter.ContactToResponse(&contacts[i])
 	}
 
 	return responses, total, nil

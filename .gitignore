@@ -1,4 +1,11 @@
 .idea
 
+# Build
+build/
+tmp/
+
 # Configuration
 config.json
+
+# Test
+cover.out

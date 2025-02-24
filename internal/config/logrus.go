@@ -5,11 +5,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-func NewLogger(viper *viper.Viper) *logrus.Logger {
+func NewLogger(v *viper.Viper) *logrus.Logger {
 	log := logrus.New()
-	format := viper.GetString("log.format")
+	format := v.GetString("log.format")
 
-	log.SetLevel(logrus.Level(viper.GetInt32("log.level")))
+	log.SetLevel(logrus.Level(v.GetUint32("log.level")))
 	switch format {
 	case "json":
 		log.SetFormatter(&logrus.JSONFormatter{})
