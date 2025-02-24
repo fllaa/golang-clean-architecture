@@ -9,5 +9,5 @@ create table contacts
     created_at bigint       not null,
     updated_at bigint       not null,
     primary key (id),
-    foreign key fk_contacts_user_id (user_id) references users (id)
-) engine = innodb;
+    foreign key (user_id) references users (id)
+);

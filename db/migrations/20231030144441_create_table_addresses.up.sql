@@ -10,5 +10,5 @@ create table addresses
     created_at  bigint       not null,
     updated_at  bigint       not null,
     primary key (id),
-    foreign key fk_addresses_contact_id (contact_id) references contacts (id)
-) engine = innodb;
+    foreign key (contact_id) references contacts (id)
+);

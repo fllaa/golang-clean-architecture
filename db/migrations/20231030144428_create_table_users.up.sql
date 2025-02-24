@@ -7,4 +7,4 @@ create table users
     created_at bigint       not null,
     updated_at bigint       not null,
     primary key (id)
-) engine = InnoDB;
+);
