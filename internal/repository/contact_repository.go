@@ -43,7 +43,7 @@ func (r *ContactRepository) FilterContact(request *model.SearchContactRequest) f
 
 		if name := request.Name; name != "" {
 			name = "%" + name + "%"
-			tx = tx.Where("first_name LIKE ? OR last_name LIKE ?", name, name)
+			tx = tx.Where("first_name ILIKE ? OR last_name ILIKE ?", name, name)
 		}
 
 		if phone := request.Phone; phone != "" {
