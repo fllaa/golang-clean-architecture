@@ -34,6 +34,12 @@ run.web: build.web
 run.worker: build.worker
 	$(BUILD_DIR)/worker
 
+watch.web:
+	air -c .air-web.toml
+
+watch.worker:
+	air -c .air-worker.toml
+
 migrate.up:
 	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" up
 
