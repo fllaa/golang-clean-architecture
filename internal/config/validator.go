@@ -5,6 +5,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-func NewValidator(v *viper.Viper) *validator.Validate {
+func NewValidator(config *viper.Viper) *validator.Validate {
 	return validator.New()
 }
