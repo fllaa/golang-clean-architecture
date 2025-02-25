@@ -47,10 +47,10 @@ This is golang clean architecture template.
 
 ## Configuration
 
-All configuration is in `example-config.json` file. You can copy this file to `config.json` and modify it.
+All configuration is in `config.example.json` file. You can copy this file to `config.json` and modify it.
 
 ```shell
-cp example-config.json config.json
+cp config.example.json config.json
 ```
 
 ## API Spec
