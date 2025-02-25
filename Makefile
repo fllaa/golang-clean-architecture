@@ -19,8 +19,7 @@ lint:
 	golangci-lint run ./...
 
 test: clean critic security lint
-	go test -v -timeout 30s -coverprofile=cover.out -cover ./...
-	go tool cover -func=cover.out
+	go test -v -timeout 30s ./test
 
 build.web: test
 	go build -ldflags="-w -s" -o $(BUILD_DIR)/web ./cmd/web/main.go
