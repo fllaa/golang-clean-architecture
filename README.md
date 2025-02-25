@@ -43,6 +43,7 @@ This is golang clean architecture template.
 - GolangCI-Lint : <https://github.com/golangci/golangci-lint>
 - GoSec : <https://github.com/securego/gosec>
 - Migrate : <https://github.com/golang-migrate/migrate>
+- Swaggo : <https://github.com/swaggo/swag>
 
 ## Configuration
 

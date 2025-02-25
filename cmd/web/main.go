@@ -3,8 +3,25 @@ package main
 import (
 	"fmt"
 	"golang-clean-architecture/internal/config"
+
+	_ "golang-clean-architecture/docs"
 )
 
+// @title           Golang Clean Architecture
+// @version         1.0.0
+// @description     Golang Clean Architecture
+
+// @host      localhost:3000
+// @BasePath  /api/
+
+// @tag.name Address
+// @tag.description Address Management API
+
+// @tag.name Contact
+// @tag.description Contact Management API
+
+// @tag.name User
+// @tag.description User Management API
 func main() {
 	viperConfig := config.NewViper()
 	log := config.NewLogger(viperConfig)

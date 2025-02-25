@@ -1,0 +1,529 @@
+basePath: /api/
+definitions:
+  http.WebAddressDeleteResponse:
+    type: object
+  http.WebAddressListResponse:
+    type: object
+  http.WebAddressResponse:
+    type: object
+  http.WebContactDeleteResponse:
+    type: object
+  http.WebContactListResponse:
+    type: object
+  http.WebContactResponse:
+    type: object
+  http.WebLogoutResponse:
+    type: object
+  http.WebUserResponse:
+    type: object
+  model.CreateAddressRequest:
+    properties:
+      city:
+        example: Jakarta
+        maxLength: 255
+        type: string
+      country:
+        example: Indonesia
+        maxLength: 100
+        type: string
+      postal_code:
+        example: "10000"
+        maxLength: 10
+        type: string
+      province:
+        example: DKI Jakarta
+        maxLength: 255
+        type: string
+      street:
+        example: Jl. Jend. Sudirman No. 1
+        maxLength: 255
+        type: string
+    type: object
+  model.CreateContactRequest:
+    properties:
+      email:
+        example: john.doe@example.com
+        maxLength: 200
+        type: string
+      first_name:
+        example: John
+        maxLength: 100
+        type: string
+      last_name:
+        example: Doe
+        maxLength: 100
+        type: string
+      phone:
+        example: "081234567890"
+        maxLength: 20
+        type: string
+    required:
+    - first_name
+    type: object
+  model.LoginUserRequest:
+    properties:
+      id:
+        example: user1
+        maxLength: 100
+        type: string
+      password:
+        example: password
+        maxLength: 100
+        type: string
+    required:
+    - id
+    - password
+    type: object
+  model.RegisterUserRequest:
+    properties:
+      id:
+        example: user1
+        maxLength: 100
+        type: string
+      name:
+        example: User 1
+        maxLength: 100
+        type: string
+      password:
+        example: password
+        maxLength: 100
+        type: string
+    required:
+    - id
+    - name
+    - password
+    type: object
+  model.UpdateAddressRequest:
+    properties:
+      city:
+        example: Jakarta
+        maxLength: 255
+        type: string
+      country:
+        example: Indonesia
+        maxLength: 100
+        type: string
+      postal_code:
+        example: "10000"
+        maxLength: 10
+        type: string
+      province:
+        example: DKI Jakarta
+        maxLength: 255
+        type: string
+      street:
+        example: Jl. Jend. Sudirman No. 1
+        maxLength: 255
+        type: string
+    type: object
+  model.UpdateContactRequest:
+    properties:
+      email:
+        example: john.doe@example.com
+        maxLength: 200
+        type: string
+      first_name:
+        example: John
+        maxLength: 100
+        type: string
+      last_name:
+        example: Doe
+        maxLength: 100
+        type: string
+      phone:
+        example: "081234567890"
+        maxLength: 20
+        type: string
+    required:
+    - first_name
+    type: object
+  model.UpdateUserRequest:
+    properties:
+      name:
+        example: User 1
+        maxLength: 100
+        type: string
+      password:
+        example: password
+        maxLength: 100
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: Golang Clean Architecture
+  title: Golang Clean Architecture
+  version: 1.0.0
+paths:
+  /contacts:
+    get:
+      consumes:
+      - application/json
+      description: List contacts.
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        type: string
+      - description: Email
+        in: query
+        name: email
+        type: string
+      - description: Phone
+        in: query
+        name: phone
+        type: string
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebContactListResponse'
+      summary: list contacts
+      tags:
+      - Contact
+    post:
+      consumes:
+      - application/json
+      description: Create new contact.
+      parameters:
+      - description: Create Contact Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateContactRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebContactResponse'
+      summary: create new contact
+      tags:
+      - Contact
+  /contacts/{contactId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete contact.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebContactDeleteResponse'
+      summary: delete contact
+      tags:
+      - Contact
+    get:
+      consumes:
+      - application/json
+      description: Get contact.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebContactResponse'
+      summary: get contact
+      tags:
+      - Contact
+    put:
+      consumes:
+      - application/json
+      description: Update contact.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Update Contact Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateContactRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebContactResponse'
+      summary: update contact
+      tags:
+      - Contact
+  /contacts/{contactId}/addresses:
+    get:
+      consumes:
+      - application/json
+      description: List addresses.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebAddressListResponse'
+      summary: list addresses
+      tags:
+      - Address
+    post:
+      consumes:
+      - application/json
+      description: Create new address.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Create Address Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateAddressRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebAddressResponse'
+      summary: create new address
+      tags:
+      - Address
+  /contacts/{contactId}/addresses/{addressId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete address.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address ID
+        in: path
+        name: addressId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebAddressDeleteResponse'
+      summary: delete address
+      tags:
+      - Address
+    get:
+      consumes:
+      - application/json
+      description: Get address.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address ID
+        in: path
+        name: addressId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebAddressResponse'
+      summary: get address
+      tags:
+      - Address
+    put:
+      consumes:
+      - application/json
+      description: Update address.
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address ID
+        in: path
+        name: addressId
+        required: true
+        type: string
+      - description: Update Address Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateAddressRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebAddressResponse'
+      summary: update address
+      tags:
+      - Address
+  /users:
+    delete:
+      consumes:
+      - application/json
+      description: Logout user.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebLogoutResponse'
+      summary: logout user
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Register new user.
+      parameters:
+      - description: Register User Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebUserResponse'
+      summary: register new user
+      tags:
+      - User
+  /users/_current:
+    get:
+      consumes:
+      - application/json
+      description: Get current user.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebUserResponse'
+      summary: get current user
+      tags:
+      - User
+    patch:
+      consumes:
+      - application/json
+      description: Update user.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Update User Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebUserResponse'
+      summary: update user
+      tags:
+      - User
+  /users/_login:
+    post:
+      consumes:
+      - application/json
+      description: Login user.
+      parameters:
+      - description: Login User Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.WebUserResponse'
+      summary: login user
+      tags:
+      - User
+swagger: "2.0"
+tags:
+- description: Address Management API
+  name: Address
+- description: Contact Management API
+  name: Contact
+- description: User Management API
+  name: User

@@ -1,8 +1,10 @@
 package route
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"golang-clean-architecture/internal/delivery/http"
+
+	scalar "github.com/fllaa/fiber-scalar"
+	"github.com/gofiber/fiber/v2"
 )
 
 type RouteConfig struct {
@@ -19,6 +21,7 @@ func (c *RouteConfig) Setup() {
 }
 
 func (c *RouteConfig) SetupGuestRoute() {
+	c.App.Get("/docs/*", scalar.HandlerDefault)
 	c.App.Post("/api/users", c.UserController.Register)
 	c.App.Post("/api/users/_login", c.UserController.Login)
 }

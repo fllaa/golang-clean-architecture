@@ -1,18 +1,24 @@
 package http
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/sirupsen/logrus"
 	"golang-clean-architecture/internal/delivery/http/middleware"
 	"golang-clean-architecture/internal/model"
 	"golang-clean-architecture/internal/usecase"
 	"math"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/sirupsen/logrus"
 )
 
 type ContactController struct {
 	UseCase *usecase.ContactUseCase
 	Log     *logrus.Logger
 }
+
+// Structs for swagger documentation
+type WebContactResponse model.WebResponse[*model.ContactResponse]
+type WebContactListResponse model.WebResponse[[]model.ContactResponse]
+type WebContactDeleteResponse model.WebResponse[bool]
 
 func NewContactController(useCase *usecase.ContactUseCase, log *logrus.Logger) *ContactController {
 	return &ContactController{
@@ -21,6 +27,15 @@ func NewContactController(useCase *usecase.ContactUseCase, log *logrus.Logger) *
 	}
 }
 
+// Create method to create new contact.
+// @Description Create new contact.
+// @Summary create new contact
+// @Tags Contact
+// @Accept json
+// @Produce json
+// @Param body body model.CreateContactRequest true "Create Contact Request"
+// @Success 200 {object} WebContactResponse
+// @Router /contacts [post]
 func (c *ContactController) Create(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -40,6 +55,19 @@ func (c *ContactController) Create(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.ContactResponse]{Data: response})
 }
 
+// List method to list contacts.
+// @Description List contacts.
+// @Summary list contacts
+// @Tags Contact
+// @Accept json
+// @Produce json
+// @Param name query string false "Name"
+// @Param email query string false "Email"
+// @Param phone query string false "Phone"
+// @Param page query int false "Page"
+// @Param size query int false "Size"
+// @Success 200 {object} WebContactListResponse
+// @Router /contacts [get]
 func (c *ContactController) List(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -71,6 +99,15 @@ func (c *ContactController) List(ctx *fiber.Ctx) error {
 	})
 }
 
+// Get method to get contact.
+// @Description Get contact.
+// @Summary get contact
+// @Tags Contact
+// @Accept json
+// @Produce json
+// @Param contactId path string true "Contact ID"
+// @Success 200 {object} WebContactResponse
+// @Router /contacts/{contactId} [get]
 func (c *ContactController) Get(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -88,6 +125,16 @@ func (c *ContactController) Get(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.ContactResponse]{Data: response})
 }
 
+// Update method to update contact.
+// @Description Update contact.
+// @Summary update contact
+// @Tags Contact
+// @Accept json
+// @Produce json
+// @Param contactId path string true "Contact ID"
+// @Param body body model.UpdateContactRequest true "Update Contact Request"
+// @Success 200 {object} WebContactResponse
+// @Router /contacts/{contactId} [put]
 func (c *ContactController) Update(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -109,6 +156,15 @@ func (c *ContactController) Update(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.ContactResponse]{Data: response})
 }
 
+// Delete method to delete contact.
+// @Description Delete contact.
+// @Summary delete contact
+// @Tags Contact
+// @Accept json
+// @Produce json
+// @Param contactId path string true "Contact ID"
+// @Success 200 {object} WebContactDeleteResponse
+// @Router /contacts/{contactId} [delete]
 func (c *ContactController) Delete(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 	contactId := ctx.Params("contactId")

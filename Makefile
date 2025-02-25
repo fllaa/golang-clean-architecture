@@ -1,4 +1,4 @@
-.PHONY: clean critic security lint test build run
+.PHONY: clean critic security lint test build run watch swag
 
 APP_NAME = golang_clean_architecture
 BUILD_DIR = $(PWD)/build
@@ -34,7 +34,7 @@ run.web: build.web
 run.worker: build.worker
 	$(BUILD_DIR)/worker
 
-watch.web:
+watch.web: swag
 	air -c .air-web.toml
 
 watch.worker:
@@ -48,3 +48,6 @@ migrate.down:
 
 migrate.force:
 	migrate -path $(MIGRATIONS_FOLDER) -database "$(DATABASE_URL)" force $(version)
+
+swag:
+	swag init -g ./cmd/web/main.go
